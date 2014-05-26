@@ -37,7 +37,7 @@ public class ChessUCIEngineThread implements ChessEngineAsyncProvider {
             String lastQuery = null;
 
             try {
-                ProcessBuilder builder = new ProcessBuilder("stockfish");
+                ProcessBuilder builder = new ProcessBuilder(path);
                 Process process = builder.start();
 
                 Scanner sc = new Scanner(process.getInputStream());
