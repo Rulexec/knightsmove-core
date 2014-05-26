@@ -328,8 +328,8 @@ public class ChessClassicRules implements IChessRules {
 
             if (!isWhiteTurn) fieldState.incrementFullMoves();
 
-            fieldState.setCastling(!kingSidedCastlingBreakFinal, isWhiteTurn, true);
-            fieldState.setCastling(!queenSidedCastlingBreakFinal, isWhiteTurn, false);
+            if (kingSidedCastlingBreakFinal) fieldState.setCastling(false, isWhiteTurn, true);
+            if (queenSidedCastlingBreakFinal) fieldState.setCastling(false, isWhiteTurn, false);
 
             fieldState.setTurn(!isWhiteTurn);
         };
