@@ -143,6 +143,10 @@ public class ChessClassicRules implements IChessRules {
                     throw new ChessIllegalMoveException();
                 }
 
+                if (dy > 0 != isWhiteTurn) {
+                    throw new ChessIllegalMoveException("pawn inversed move");
+                }
+
                 if (ady == 2) {
                     // Если это ход на две клетки, проверяем, точно ли это исходный ряд пешек
                     // и не занята ли проходная.

@@ -5,7 +5,7 @@ import by.muna.chess.IChessField;
 public interface IChessTaskCriteria {
     ChessTaskCriteriaType getCriteriaType();
 
-    Object init(IChessTask task);
+    IChessTaskCriteriaState init(IChessTask task);
 
-    ChessTaskState check(Object o, IChessField field);
+    ChessTaskState check(IChessTaskCriteriaState o, IChessField field);
 }

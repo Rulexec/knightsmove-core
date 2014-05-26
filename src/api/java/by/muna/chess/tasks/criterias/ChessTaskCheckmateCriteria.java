@@ -8,15 +8,21 @@ import by.muna.chess.tasks.ChessTaskCriteriaType;
 import by.muna.chess.tasks.ChessTaskState;
 import by.muna.chess.tasks.IChessTask;
 import by.muna.chess.tasks.IChessTaskCriteria;
+import by.muna.chess.tasks.IChessTaskCriteriaState;
 
 public class ChessTaskCheckmateCriteria implements IChessTaskCriteria {
-    private static class CriteriaState {
+    private static class CriteriaState implements IChessTaskCriteriaState {
         public boolean playerIsWhite;
         public int startTurn;
 
         public CriteriaState(boolean playerIsWhite, int startTurn) {
             this.playerIsWhite = playerIsWhite;
             this.startTurn = startTurn;
+        }
+
+        @Override
+        public IChessTaskCriteriaState clone() {
+            return new CriteriaState(this.playerIsWhite, this.startTurn);
         }
     }
 
@@ -31,14 +37,14 @@ public class ChessTaskCheckmateCriteria implements IChessTaskCriteria {
     }
 
     @Override
-    public Object init(IChessTask task) {
+    public IChessTaskCriteriaState init(IChessTask task) {
         IChessFieldState fieldState = task.getField().getFieldState();
 
         return new CriteriaState(fieldState.isWhiteTurn(), fieldState.getFullMoves());
     }
 
     @Override
-    public ChessTaskState check(Object o, IChessField field) {
+    public ChessTaskState check(IChessTaskCriteriaState o, IChessField field) {
         CriteriaState criteriaState = (CriteriaState) o;
 
         boolean playerMoved = criteriaState.playerIsWhite != field.getFieldState().isWhiteTurn();
@@ -48,8 +54,6 @@ public class ChessTaskCheckmateCriteria implements IChessTaskCriteria {
         ChessMateState mateState = ChessClassicRules.RULES.getMateState(field);
 
         if (playerMoved) {
-            movesDiff += (criteriaState.playerIsWhite ? 1 : 0);
-
             switch (mateState) {
             case CHECKMATE: return ChessTaskState.WIN;
             case STALEMATE: return ChessTaskState.LOOSE;

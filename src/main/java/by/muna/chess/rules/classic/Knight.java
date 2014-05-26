@@ -31,7 +31,7 @@ public class Knight {
                     int x = pos.getX() + offset.x;
                     int y = pos.getY() + offset.y;
 
-                    if (!(x < 0 || x >= 8 || y < 0 || y >= 8)) {
+                    if (x >= 0 && x < 8 && y >= 0 && y < 8) {
                         this.nextPosition = new ChessPosition(x, y);
                         break;
                     }

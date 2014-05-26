@@ -3,6 +3,7 @@ package by.muna.chess.rules.classic;
 import by.muna.chess.ChessPosition;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,8 @@ public class Pawn {
         int x1 = pos.getX() - 1;
         int x2 = pos.getX() + 1;
         int y = pos.getY() + (forWhite ? 1 : -1);
+
+        if (y < 0 || y >= 8) return Collections.<ChessPosition>emptyList().iterator();
 
         List<ChessPosition> positions = new ArrayList<>(2);
 
